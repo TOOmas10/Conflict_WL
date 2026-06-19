@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins, Cinzel } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
@@ -18,7 +18,19 @@ const cinzel = Cinzel({
   variable: "--font-cinzel",
 });
 
+const siteUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "http://localhost:3000";
+
+export const viewport: Viewport = {
+  themeColor: "#f59e0b",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Conflict WL — Serveur FiveM WhiteList Francophone",
     template: "%s | Conflict WL",
@@ -41,10 +53,15 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Conflict WL" }],
   creator: "Conflict WL",
+  publisher: "Conflict WL",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Conflict WL — Serveur FiveM WhiteList Francophone",
     description:
       "Un univers évolutif ancré en 2026. Rejoignez Los Santos, intégrez une faction et forgez l'avenir de la ville.",
+    url: "/",
     type: "website",
     locale: "fr_FR",
     siteName: "Conflict WL",
@@ -67,11 +84,12 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true },
-  },
-  icons: {
-    icon: "/logo.webp",
-    apple: "/logo.webp",
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
